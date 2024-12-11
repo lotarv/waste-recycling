@@ -24,7 +24,6 @@ function Table({ columns, data, modifier }) {
                                 </td>
                                 ))
                             }
-                            {console.log(row.id)}
                             {modifier == "techDetails" && <td> <a href={`/details/${row.id}`}>Подробнее</a></td>}
                         </tr>
                     ))}

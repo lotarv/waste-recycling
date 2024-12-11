@@ -4,9 +4,8 @@ import './App.css'
 import TableView from './pages/TableView/TableView'
 import TechDetails from './pages/TechDetails/TechDetails';
 import Header from './components/Header/Header';
-import TechnologyForm from './components/Form/Form2';
+import TechnologyForm from './pages/Form/Form';
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
