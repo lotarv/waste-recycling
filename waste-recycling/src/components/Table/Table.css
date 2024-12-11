@@ -1,0 +1,30 @@
+.table-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;
+  }
+  
+  
+.data-table {
+border-collapse: collapse;
+text-align: center;
+}
+
+.data-table th, .data-table td {
+    max-width: 200px;
+    border: 1px solid #ddd;
+}
+
+.data-table th {
+background-color: #2d6a4f;
+color: #fff;
+}
+
+.data-table tr:nth-child(even) {
+background-color: #e6f4ea;
+}
+
+.data-table tr:hover {
+background-color: #c2e5d3;
+cursor: pointer;
+}

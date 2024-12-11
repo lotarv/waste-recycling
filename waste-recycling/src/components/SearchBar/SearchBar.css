@@ -1,0 +1,28 @@
+.search-bar-container{
+    display: flex;
+    justify-content: center;
+}
+.search-bar {
+    width: 100%;
+    max-width: 400px; /* Ограничение по ширине */
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #2d6a4f; /* Основной цвет */
+    border-radius: 5px; /* Закругленные углы */
+    outline: none;
+    background-color: #f9f9f9; /* Светлый фон */
+    color: #333; /* Цвет текста */
+    transition: all 0.3s ease; /* Анимация перехода */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar::placeholder {
+    color: #aaa; /* Цвет плейсхолдера */
+    font-style: italic;
+}
+
+.search-bar:focus {
+    border-color: #40916c; /* Цвет рамки при фокусе */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
+    background-color: #ffffff; /* Подсветка фона */
+}
