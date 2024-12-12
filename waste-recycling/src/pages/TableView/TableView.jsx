@@ -35,8 +35,8 @@ function TableView() {
             <Table columns={columns} data={data} modifier="techDetails"></Table>
             <div style={{textAlign:"center"}}>
                 <button onClick={() => setPage((p) => Math.max(p - 1, 1))}>{"<"}</button>
-                <span style = {{fontWeight:"bold"}}>{page} / {total > 10? Math.round(total / 10) : 1}</span>
-                <button onClick={() => setPage((p) => (p * 10 < total ? p + 1 : p))}>{">"}</button>
+                <span style = {{fontWeight:"bold"}}>{page} / {total > 10? Math.round(total / 5) : 1}</span>
+                <button onClick={() => setPage((p) => (p * 5 < total ? p + 1 : p))}>{">"}</button>
             </div>
         </div>
     )
