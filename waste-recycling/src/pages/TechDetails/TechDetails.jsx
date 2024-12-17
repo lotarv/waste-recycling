@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Table from "../../components/Table/Table";
+import "./TechDetails.css"
 const TechDetails = () => {
     const { id } = useParams();
 
@@ -95,7 +96,7 @@ const TechDetails = () => {
     ]
 
     return (
-        <div>
+        <div className="tech-details">
             <h1>Подробная информация о технологии</h1>
             <p><strong>Наименование технологии:</strong> {testData.name}</p>
             <p><strong>Назначение технологии:</strong> {testData.purpose}</p>

@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
-import TableView from './pages/TableView/TableView'
+import TechnologiesTableView from './pages/technologiesView/TechnologiesView'
 import TechDetails from './pages/TechDetails/TechDetails';
 import Header from './components/Header/Header';
-import TechnologyForm from './pages/Form/Form';
+import TechnologyForm from './pages/TechnologyForm/TechnologyForm';
+import WasteProducersForm from './pages/WasteProducersForm/WasteProducersForm';
+import WasteProducersView from './pages/WasteProducersView.jsx/WasteProducersView';
 function App() {
 
   return (
@@ -12,9 +14,11 @@ function App() {
       <Router>
       <Header></Header>
       <Routes>
-        <Route path="/" element={<TableView />} />
+        <Route path="/" element={<TechnologiesTableView />} />
         <Route path="/details/:id" element={<TechDetails />} />
-        <Route path = "/form" element = {<TechnologyForm/>}></Route>
+        <Route path = "/technologyForm" element = {<TechnologyForm/>}></Route>
+        <Route path = "/wasteProducersForm" element = {<WasteProducersForm/>}></Route>
+        <Route path = "/wasteProducersView" element = {<WasteProducersView/>}></Route>
       </Routes>
     </Router>
     </>

@@ -143,10 +143,17 @@ const testData = [
 
 async function fetchTableData(page = 1, search = "") {
     const filteredData = testData.filter((item) => {
-        return item.fkkoCodes.some((code) =>
-            code.toLowerCase().includes(search.toLowerCase())
+        const searchLower = search.toLowerCase();
+
+        return (
+            item.name.toLowerCase().includes(searchLower) || // Поиск по названию
+            item.purpose.toLowerCase().includes(searchLower) || // Поиск по назначению
+            item.description.toLowerCase().includes(searchLower) || // Поиск по описанию
+            item.fkkoCodes.some((code) =>
+                code.toLowerCase().includes(searchLower) // Поиск в кодах ФККО
+            )
         );
-    })
+    });
 
     const itemsPerPage = 5;
     const startIndex = (page - 1) * itemsPerPage;
@@ -154,7 +161,7 @@ async function fetchTableData(page = 1, search = "") {
     return {
         data: filteredData.slice(startIndex, startIndex + itemsPerPage),
         total: filteredData.length,
-    }
+    };
 }
 
 export default fetchTableData;

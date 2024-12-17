@@ -45,37 +45,6 @@ strong {
   color: var(--primary-color);
 }
 
-/* Стили для таблиц */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  padding: 12px;
-  border: 1px solid var(--table-border-color);
-  text-align: left;
-}
-
-th {
-  background-color: var(--primary-color);
-  color: #fff;
-  font-weight: bold;
-}
-
-td {
-  background-color: var(--secondary-color);
-}
-
-tr:nth-child(even) {
-  background-color: var(--highlight-color);
-}
-
-tr:hover {
-  background-color: var(--highlight-color);
-  cursor: pointer;
-}
 
 /* Стили для ссылок */
 a {
@@ -109,7 +78,8 @@ button:hover {
 .info-block {
   background-color: var(--secondary-color);
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  max-width: 1200px;
+  text-align: center;
+  margin: 0 auto;
 }

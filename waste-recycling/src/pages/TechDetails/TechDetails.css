@@ -1,0 +1,77 @@
+.tech-details {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa; /* Светлый фон */
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tech-details h1 {
+    font-size: 1.8rem;
+    color: #2d6a4f;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tech-details p {
+    font-size: 1rem;
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.tech-details strong {
+    color: #343a40;
+}
+
+.table-container {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table th, .data-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+}
+
+.data-table th {
+    background-color: #2d6a4f;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.data-table td {
+    background-color: white;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.data-table td {
+    background-color: #e9f5ee;
+}
+
+.data-table tr:hover td {
+    background-color: #d4edda;
+}
+
+.tech-details .section-title {
+    font-size: 1.2rem;
+    color: #2d6a4f;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 5px;
+}

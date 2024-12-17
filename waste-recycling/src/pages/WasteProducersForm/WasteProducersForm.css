@@ -1,4 +1,4 @@
-.technology-form {
+.technology-form, .waste-management-form {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
@@ -24,6 +24,35 @@
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.waste-type-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.waste-type-item input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.waste-type-item button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.waste-type-item button:hover {
+    background-color: #d62828;
 }
 
 .submit-button {
