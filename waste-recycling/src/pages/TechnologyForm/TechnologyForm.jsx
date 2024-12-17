@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./TechnologyForm.css";
-
 function TechnologyForm() {
     const [formData, setFormData] = useState({
         name: "",
