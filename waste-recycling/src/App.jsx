@@ -5,7 +5,7 @@ import TechnologiesTableView from './pages/technologiesView/TechnologiesView'
 import TechDetails from './pages/TechDetails/TechDetails';
 import Header from './components/Header/Header';
 import TechnologyFormNew from './pages/TechnologyForm/TechnologyFormNew';
-import WasteProducersForm from './pages/WasteProducersForm/WasteProducersForm';
+import WasteProducersFormNew from './pages/WasteProducersForm/WasteProducersFormNew';
 import WasteProducersView from './pages/WasteProducersView.jsx/WasteProducersView';
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<TechnologiesTableView />} />
         <Route path="/details/:id" element={<TechDetails />} />
         <Route path = "/technologyForm" element = {<TechnologyFormNew/>}></Route>
-        <Route path = "/wasteProducersForm" element = {<WasteProducersForm/>}></Route>
+        <Route path = "/wasteProducersForm" element = {<WasteProducersFormNew/>}></Route>
         <Route path = "/wasteProducersView" element = {<WasteProducersView/>}></Route>
       </Routes>
     </Router>
