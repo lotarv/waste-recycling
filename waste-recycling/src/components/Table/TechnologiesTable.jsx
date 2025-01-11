@@ -1,6 +1,6 @@
 import "./Table.css";
 
-function Table({ columns, data }) {
+function TechnologiesTable({ columns, data }) {
     return (
         <div className="table-container">
             <table className="data-table">
@@ -9,6 +9,7 @@ function Table({ columns, data }) {
                         {columns.map((col) => (
                             <th key={col.accessor}>{col.Header}</th>
                         ))}
+                        <th>Ознакомиться подробнее</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,12 +19,17 @@ function Table({ columns, data }) {
                                 <td key={col.accessor}>
                                     {Array.isArray(row[col.accessor])
                                         ? row[col.accessor]
-                                              .map((item) => `${item.code}`)
-                                              .join(", ") // Преобразование массива объектов в строку
+                                            .map((item) => `${item.code}`)
+                                            .join(", ") // Преобразование массива объектов в строку
                                         : row[col.accessor] // Для обычных значений
                                     }
                                 </td>
                             ))}
+
+                            <td>
+                                <a href={`/details/${row.id}`}>Подробнее</a>
+                            </td>
+
                         </tr>
                     ))}
                 </tbody>
@@ -32,4 +38,4 @@ function Table({ columns, data }) {
     );
 }
 
-export default Table;
+export default TechnologiesTable;

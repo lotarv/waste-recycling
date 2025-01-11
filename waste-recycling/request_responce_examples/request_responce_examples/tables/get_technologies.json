@@ -1,0 +1,16 @@
+[
+    {
+        "id": 0,
+        "name": "String",
+        "assignment": "String",
+        "characteristic": "String",
+        "fkko": [
+            {
+                "code": "String",
+                "name": "String"
+            }
+        ],
+        "useCase": "String",
+        "expertConclusion": "String"
+    }
+]

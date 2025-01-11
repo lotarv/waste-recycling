@@ -1,78 +1,67 @@
 const producersData = [
     {
-        id: 1,
-        municipality: "Городской округ - город Армавир",
-        organization: "Экология Юг",
-        fkkoCode: "47110101522",
-        wasteTypes: [
-            { type: "Лампы ртутные" },
-            { type: "Металлические отходы" }
-        ],
+        location: "Городской округ - город Армавир",
+        name: "Экология Юг",
+        fkko: {
+            code: "47110101522",
+            name: "Отходы ламп ртутных"
+        },
         hazardClass: "2",
     },
     {
-        id: 2,
-        municipality: "Городской округ - город Армавир",
-        organization: "Чистый город",
-        fkkoCode: "48121102533",
-        wasteTypes: [
-            { type: "Стекло" },
-            { type: "Электронные отходы" }
-        ],
+        location: "Городской округ - город Армавир",
+        name: "Чистый город",
+        fkko: {
+            code: "48121102533",
+            name: "Отходы стеклянной продукции"
+        },
         hazardClass: "3",
     },
     {
-        id: 3,
-        municipality: "Городской округ - город Армавир",
-        organization: "Экопром",
-        fkkoCode: "49210101531",
-        wasteTypes: [
-            { type: "Батарейки" },
-            { type: "Пластик" }
-        ],
+        location: "Городской округ - город Армавир",
+        name: "Экопром",
+        fkko: {
+            code: "49210101531",
+            name: "Отходы батареек"
+        },
         hazardClass: "1",
     },
     {
-        id: 4,
-        municipality: "Городской округ - город Армавир",
-        organization: "Зеленый мир",
-        fkkoCode: "48121102524",
-        wasteTypes: [
-            { type: "Строительный мусор" },
-            { type: "Бытовые отходы" }
-        ],
+        location: "Городской округ - город Армавир",
+        name: "Зеленый мир",
+        fkko: {
+            code: "48121102524",
+            name: "Строительный мусор"
+        },
         hazardClass: "4",
     },
     {
-        id: 5,
-        municipality: "Городской округ - город Армавир",
-        organization: "Чистый край",
-        fkkoCode: "49210101512",
-        wasteTypes: [
-            { type: "Отходы пищевой промышленности" }
-        ],
+        location: "Городской округ - город Армавир",
+        name: "Чистый край",
+        fkko: {
+            code: "49210101512",
+            name: "Отходы пищевой промышленности"
+        },
         hazardClass: "2",
     },
     {
-        id: 6,
-        municipality: "Городской округ - город Армавир",
-        organization: "Эко-транс",
-        fkkoCode: "49210101591",
-        wasteTypes: [
-            { type: "Опасные химические отходы" }
-        ],
+        location: "Городской округ - город Армавир",
+        name: "Эко-транс",
+        fkko: {
+            code: "49210101591",
+            name: "Опасные химические отходы"
+        },
         hazardClass: "1",
     },
 ];
 
+
 export async function fetchProducersData(page = 1, search = "") {
     const filteredData = producersData.filter((item) =>
-        item.municipality.toLowerCase().includes(search.toLowerCase()) ||
-        item.organization.toLowerCase().includes(search.toLowerCase()) ||
-        item.fkkoCode.includes(search) ||
-        item.wasteTypes.some((w) =>
-            w.type.toLowerCase().includes(search.toLowerCase())
-        )
+        item.location.toLowerCase().includes(search.toLowerCase()) || // Поиск по местоположению
+        item.name.toLowerCase().includes(search.toLowerCase()) || // Поиск по названию организации
+        item.fkko.code.includes(search) || // Поиск по коду ФККО
+        item.fkko.name.toLowerCase().includes(search.toLowerCase()) // Поиск по наименованию ФККО
     );
 
     const itemsPerPage = 5;

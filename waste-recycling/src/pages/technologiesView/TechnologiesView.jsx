@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Table from "../../components/Table/Table";
+import TechnologiesTable from "../../components/Table/TechnologiesTable.jsx";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import fetchTableData from "../../api/TechnologyApi";
 
@@ -11,11 +11,11 @@ function TechnologiesTableView() {
 
     const columns = [
         { Header: "Наименование технологии", accessor: "name" },
-        { Header: "Назначение технологии", accessor: "purpose" },
-        { Header: "Краткая характеристика процесса", accessor: "description" },
-        { Header: "Коды по ФККО перерабатываемых элементов", accessor: "fkkoCodes" },
-        { Header: "Применение технологии", accessor: "application" },
-        { Header: "Основной вывод заключения", accessor: "conclusion" },
+        { Header: "Назначение технологии", accessor: "assignment" },
+        { Header: "Краткая характеристика процесса", accessor: "characteristic" },
+        { Header: "Коды по ФККО перерабатываемых элементов", accessor: "fkko" },
+        { Header: "Применение технологии", accessor: "useCase" },
+        { Header: "Основной вывод заключения", accessor: "expertConclusion" },
     ]
 
     useEffect(() => {
@@ -27,8 +27,6 @@ function TechnologiesTableView() {
         }
         loadData();
     }, [page, search])
-    console.log(total, page)
-    console.log(data)
     return (
         <div>
             <div className="info-block">
@@ -36,10 +34,10 @@ function TechnologiesTableView() {
                 <p>Эта таблица содержит информацию о существующих технологиях переработки отходов, включая их наименование, назначение, описание, коды ФККО, и другую ключевую информацию. Для подробного ознакомления с каждой технологией нажмите на ссылку "подробнее"</p>
             </div>
             <SearchBar value={search} onChange={setSearch}></SearchBar>
-            <Table columns={columns} data={data} modifier="techDetails"></Table>
+            <TechnologiesTable columns={columns} data={data}></TechnologiesTable>
             <div style={{ textAlign: "center" }}>
                 <button onClick={() => setPage((p) => Math.max(p - 1, 1))}>{"<"}</button>
-                <span style={{ fontWeight: "bold" }}>{page} / {total > 10 ? Math.round(total / 5) : 1}</span>
+                <span style={{ fontWeight: "bold" }}>{page} / {total > 5 ? Math.ceil(total / 5) : 1}</span>
                 <button onClick={() => setPage((p) => (p * 5 < total ? p + 1 : p))}>{">"}</button>
             </div>
         </div>

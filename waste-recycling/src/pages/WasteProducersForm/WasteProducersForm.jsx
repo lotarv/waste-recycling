@@ -1,57 +1,54 @@
 import React, { useState } from "react";
+import Select from "react-select";
+import fetchFkkos from "../../api/FkkoApi";
 import "./WasteProducersForm.css";
 
 function WasteProducersForm() {
   const [formData, setFormData] = useState({
-    municipality: "",
-    fkkoCode: "",
-    wasteTypes: [{ type: "" }],
+    location: "",
+    name: "",
+    fkko: { code: "", name: "" },
     hazardClass: "",
-    organization: "",
   });
 
   const [errors, setErrors] = useState({});
 
+  // Преобразование данных ФККО в формат для Select
+  const fkkoOptions = fetchFkkos().map((item) => ({
+    value: {
+        name: item.name,
+        code: item.code,
+    },
+    label: `${item.code} - ${item.name}`,
+}));
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "fkkoCode") {
-      // Автоматически вычисляем класс опасности
-      const hazardClass = value ? value.slice(-1) : "";
-      setFormData({ ...formData, [name]: value, hazardClass });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleWasteTypeChange = (index, value) => {
-    const updatedWasteTypes = [...formData.wasteTypes];
-    updatedWasteTypes[index].type = value;
-    setFormData({ ...formData, wasteTypes: updatedWasteTypes });
-  };
-
-  const addWasteType = () => {
-    setFormData({ ...formData, wasteTypes: [...formData.wasteTypes, { type: "" }] });
-  };
-
-  const removeWasteType = (index) => {
-    const updatedWasteTypes = formData.wasteTypes.filter((_, i) => i !== index);
-    setFormData({ ...formData, wasteTypes: updatedWasteTypes });
+  const handleFkkoChange = (selectedOption) => {
+    const hazardClass = selectedOption ? selectedOption.value.code.slice(-1) : "";
+    setFormData({
+      ...formData,
+      fkko: selectedOption ? selectedOption.value : { code: "", name: "" },
+      hazardClass,
+    });
   };
 
   const validateForm = () => {
     const newErrors = {};
 
-    // Валидация кода ФККО
-    if (!/^\d{10}[0-5]$/.test(formData.fkkoCode)) {
-      newErrors.fkkoCode = "Код ФККО должен состоять из 11 символов, последний символ — число от 0 до 5.";
+    if (!formData.location.trim()) {
+      newErrors.location = "Муниципальное образование обязательно.";
     }
 
-    if (!formData.municipality.trim()) {
-      newErrors.municipality = "Муниципальное образование обязательно.";
+    if (!formData.name.trim()) {
+      newErrors.name = "Название организации обязательно.";
     }
 
-    if (!formData.organization.trim()) {
-      newErrors.organization = "Название организации обязательно.";
+    if (!formData.fkko.code) {
+      newErrors.fkko = "Выберите код ФККО.";
     }
 
     setErrors(newErrors);
@@ -60,8 +57,10 @@ function WasteProducersForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (validateForm()) {
       console.log("Submitted Data:", formData);
+      // Здесь можно отправить данные через API
     }
   };
 
@@ -70,54 +69,47 @@ function WasteProducersForm() {
       <div className="info-block">
         <h1>Форма для ввода данных об организациях</h1>
         <p>
-            Эта форма предназначена для внесения данных о муниципальных образованиях, организациях, производящих отходы, а также информации о видах отходов и классе их опасности.
+          Эта форма предназначена для внесения данных о муниципальных образованиях, организациях, производящих отходы, а также информации о коде ФККО и классе опасности.
         </p>
-    </div>
+      </div>
       <form onSubmit={handleSubmit} className="technology-form">
         <div className="form-group">
-          <label htmlFor="municipality">Муниципальное образование</label>
+          <label htmlFor="location">Муниципальное образование</label>
           <input
             type="text"
-            id="municipality"
-            name="municipality"
-            value={formData.municipality}
+            id="location"
+            name="location"
+            value={formData.location}
             onChange={handleChange}
             required
           />
-          {errors.municipality && <span className="error">{errors.municipality}</span>}
+          {errors.location && <span className="error">{errors.location}</span>}
         </div>
+
         <div className="form-group">
-          <label htmlFor="fkkoCode">Код ФККО</label>
+          <label htmlFor="name">Название организации</label>
           <input
             type="text"
-            id="fkkoCode"
-            name="fkkoCode"
-            value={formData.fkkoCode}
+            id="name"
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
           />
-          {errors.fkkoCode && <span className="error">{errors.fkkoCode}</span>}
+          {errors.name && <span className="error">{errors.name}</span>}
         </div>
+
         <div className="form-group">
-          <label>Вид отходов</label>
-          {formData.wasteTypes.map((waste, index) => (
-            <div key={index} className="waste-type-item">
-              <input
-                type="text"
-                placeholder={`Вид отхода #${index + 1}`}
-                value={waste.type}
-                onChange={(e) => handleWasteTypeChange(index, e.target.value)}
-                required
-              />
-              <button type="button" onClick={() => removeWasteType(index)}>
-                Удалить
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={addWasteType}>
-            Добавить вид отхода
-          </button>
+          <label htmlFor="fkko">Код ФККО</label>
+          <Select
+            options={fkkoOptions}
+            onChange={handleFkkoChange}
+            placeholder="Выберите код ФККО"
+            isSearchable
+          />
+          {errors.fkko && <span className="error">{errors.fkko}</span>}
         </div>
+
         <div className="form-group">
           <label htmlFor="hazardClass">Класс опасности</label>
           <input
@@ -128,18 +120,7 @@ function WasteProducersForm() {
             readOnly
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="organization">Организация-производитель отходов</label>
-          <input
-            type="text"
-            id="organization"
-            name="organization"
-            value={formData.organization}
-            onChange={handleChange}
-            required
-          />
-          {errors.organization && <span className="error">{errors.organization}</span>}
-        </div>
+
         <button type="submit" className="submit-button">Отправить</button>
       </form>
     </div>

@@ -2,7 +2,7 @@ import SiteLogo from "../../assets/recycle.png";
 import { useNavigate } from "react-router-dom";
 import './header.css';
 
-function Header() {
+function HeaderTechnologies() {
   const navigate = useNavigate();
 
   const handleSelectChange = (e) => {
@@ -30,11 +30,11 @@ function Header() {
         >
           <option value="" disabled>Выберите раздел</option>
           <option value="/technologyView">Технологии переработки отходов</option>
-          <option value="/wasteProducersView">Организации-производители отходов</option>
+          <option value="/technologyForm">Добавить технологию переработки</option>
         </select>
       </div>
     </header>
   );
 }
 
-export default Header;
+export default HeaderTechnologies;

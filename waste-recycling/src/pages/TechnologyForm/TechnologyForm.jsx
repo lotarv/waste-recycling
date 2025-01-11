@@ -1,18 +1,23 @@
 import React, { useState } from "react";
+import Select from "react-select";
+import assignments from "../../data/assignments";
 import "./TechnologyForm.css";
+import fetchFkkos from "../../api/FkkoApi";
+import fetchOkpds from "../../api/OkpdApi";
 function TechnologyForm() {
     const [formData, setFormData] = useState({
         name: "",
-        purpose: "",
+        assignment: "",
         description: "",
-        resources: { energy: "", water: "", disposal: "" },
+        resources: { energy: "", water: "", disposal: ""},
         waste_to_recycle: [{ fkkoCode: "", fkkoName: "" }],
         secondaryWasteOkpd: [{ okpdCode: "", okpdName: "" }],
         productivity: "",
         secondaryWaste: [{ mass: "", volume: "", fkkoCode: "", fkkoName: "" }],
         developerInfo: { adress: "", phone: "", site: "" },
         userInfo: { adress: "", phone: "", site: "" },
-        conclusion: "",
+        expertInfo: {conclusion:"", date:"", name:"", number:""},
+        useCase: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -50,7 +55,7 @@ function TechnologyForm() {
 
         // Основные поля
         if (!formData.name) newErrors.name = "Название технологии обязательно";
-        if (!formData.purpose) newErrors.purpose = "Цель обязательна";
+        if (!formData.assignment) newErrors.assignment = "Цель обязательна";
         if (!formData.description) newErrors.description = "Описание обязательно";
         if (!formData.productivity || isNaN(formData.productivity))
             newErrors.productivity = "Укажите корректную производительность";
@@ -86,11 +91,88 @@ function TechnologyForm() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!validateForm()) return;
-        console.log("Отправка данных:", formData);
+    const structureNewJson = (data) => {
+        const dataToPost = {
+            name: data.name,
+            assignment: data.assignment,
+            characteristic: data.description,
+            resources: { energy: parseFloat(data.resources.energy), water: parseFloat(data.resources.water), usingPerYear: parseFloat(data.resources.disposal) },
+            fkko: data.waste_to_recycle.map(item => (
+                {
+                    name: item.fkkoName,
+                    code: item.fkkoCode,
+                }
+            )),
+            okpd: data.secondaryWasteOkpd.map(item => (
+                {
+                    name: item.okpdName,
+                    code: item.okpdCode,
+                }
+            )),
+            performance: parseFloat(data.productivity),
+            secondaryWaste: data.secondaryWaste.map(item => (
+                {
+                    fkko: {
+                        name: item.fkkoName,
+                        code: item.fkkoCode,
+                    },
+                    mass: parseFloat(item.mass),
+                    volume: parseFloat(item.volume),
+                }
+            )),
+            developer: data.developerInfo,
+            users: [data.userInfo],
+            useCase: data.useCase,
+            expertInfo: {...data.expertInfo, date:Math.floor(Date.parse(data.expertInfo.date) / 1000)},
+        }
+
+        return dataToPost;
+    }
+
+    const handleFkkoChange = (selectedOption, index, key) => {
+        const updatedWaste = [...formData[key]];
+        updatedWaste[index].fkkoCode = selectedOption.value.code; // Обновляем код
+        updatedWaste[index].fkkoName = selectedOption.value.name; // Обновляем наименование
+        setFormData({ ...formData, [key]: updatedWaste });
     };
+
+    const handleOkpdChange = (selectedOption, index, key) => {
+        const updatedWaste = [...formData[key]];
+        updatedWaste[index].okpdCode = selectedOption.value.code; // Обновляем код
+        updatedWaste[index].okpdName = selectedOption.value.name; // Обновляем наименование
+        setFormData({ ...formData, [key]: updatedWaste });
+    };
+    
+
+    const handleSubmit = (e) => {
+        console.log("kek")
+        e.preventDefault();
+        // if (!validateForm()) return;
+        console.log("formData:", formData);
+        console.log(structureNewJson(formData))
+    };
+
+    // Опции для Select
+    const assignmentOptions = assignments.map((item) => ({
+        value: item,
+        label: item,
+    }));
+
+    const fkkoOptions = fetchFkkos().map((item) => ({
+        value: {
+            name: item.name,
+            code: item.code,
+        },
+        label: `${item.code} - ${item.name}`,
+    }));
+
+    const okpdOptions = fetchOkpds().map((item) => ({
+        value: {
+            name: item.name,
+            code: item.code,
+        },
+        label: `${item.code} - ${item.name}`,
+    }));
 
     return (
         <div className="technologies-form">
@@ -114,16 +196,15 @@ function TechnologyForm() {
                     {errors.name && <span className="error">{errors.name}</span>}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="purpose">Цель</label>
-                    <input
-                        type="text"
-                        id="purpose"
-                        name="purpose"
-                        value={formData.purpose}
-                        onChange={handleChange}
-
+                    <label>Назначение технологии</label>
+                    <Select
+                        options={assignmentOptions}
+                        onChange={(selectedOption) =>
+                            setFormData({ ...formData, assignment: selectedOption.value })
+                        }
+                        placeholder="Выберите цель"
                     />
-                    {errors.purpose && <span className="error">{errors.purpose}</span>}
+                    {errors.assignment && <span className="error">{errors.assignment}</span>}
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Описание</label>
@@ -137,9 +218,22 @@ function TechnologyForm() {
                     {errors.description && <span className="error">{errors.description}</span>}
                 </div>
                 <div className="form-group">
+                    <label htmlFor="description">Применение технологии</label>
+                    <textarea
+                        id="useCase"
+                        name="useCase"
+                        value={formData.useCase}
+                        onChange={handleChange}
+                        
+
+                    />
+                    {errors.description && <span className="error">{errors.description}</span>}
+                </div>
+                <div className="form-group">
                     <label>Ресурсы</label>
                     <input
                         type="number"
+                        step="0.01"
                         placeholder="Энергия"
                         name="resources.energy"
                         value={formData.resources.energy}
@@ -147,6 +241,7 @@ function TechnologyForm() {
                     />
                     <input
                         type="number"
+                        step="0.01"
                         placeholder="Вода"
                         name="resources.water"
                         value={formData.resources.water}
@@ -154,6 +249,7 @@ function TechnologyForm() {
                     />
                     <input
                         type="number"
+                        step="0.01"
                         placeholder="Обезвреживание"
                         name="resources.disposal"
                         value={formData.resources.disposal}
@@ -164,6 +260,7 @@ function TechnologyForm() {
                     <label htmlFor="productivity">Производительность (тонн/год)</label>
                     <input
                         type="number"
+                        step="0.01"
                         id="productivity"
                         name="productivity"
                         value={formData.productivity}
@@ -176,27 +273,20 @@ function TechnologyForm() {
                     <label>Отходы для переработки</label>
                     {formData.waste_to_recycle.map((item, index) => (
                         <div key={index} className="nested-group">
-                            <input
-                                type="text"
-                                placeholder="Код ФККО"
-                                value={item.fkkoCode}
-                                onChange={(e) =>
-                                    handleNestedChange(index, "fkkoCode", e.target.value, "waste_to_recycle")
+                            <Select
+                                options={fkkoOptions}
+                                onChange={(selectedOption) =>
+                                    handleFkkoChange(selectedOption, index, "waste_to_recycle")
                                 }
+                                placeholder="Выберите код ФККО"
+                                isSearchable
                             />
                             {errors[`waste_to_recycle_${index}_fkkoCode`] && (
                                 <span className="error">
                                     {errors[`waste_to_recycle_${index}_fkkoCode`]}
                                 </span>
                             )}
-                            <input
-                                type="text"
-                                placeholder="Название отхода"
-                                value={item.fkkoName}
-                                onChange={(e) =>
-                                    handleNestedChange(index, "fkkoName", e.target.value, "waste_to_recycle")
-                                }
-                            />
+                            
                             <button type="button" onClick={() => removeElement("waste_to_recycle", index)}>
                                 Удалить
                             </button>
@@ -215,21 +305,13 @@ function TechnologyForm() {
                     <label>Продукты переработки (ОКПД)</label>
                     {formData.secondaryWasteOkpd.map((item, index) => (
                         <div key={index} className="nested-group">
-                            <input
-                                type="text"
-                                placeholder="Код ОКПД"
-                                value={item.okpdCode}
-                                onChange={(e) =>
-                                    handleNestedChange(index, "okpdCode", e.target.value, "secondaryWasteOkpd")
+                            <Select
+                                options={okpdOptions}
+                                onChange={(selectedOption) =>
+                                    handleOkpdChange(selectedOption, index, "secondaryWasteOkpd")
                                 }
-                            />
-                            <input
-                                type="text"
-                                placeholder="Название"
-                                value={item.okpdName}
-                                onChange={(e) =>
-                                    handleNestedChange(index, "okpdName", e.target.value, "secondaryWasteOkpd")
-                                }
+                                placeholder="Выберите ОКПД"
+                                isSearchable
                             />
                             <button type="button" onClick={() => removeElement("secondaryWasteOkpd", index)}>
                                 Удалить
@@ -250,7 +332,8 @@ function TechnologyForm() {
                     {formData.secondaryWaste.map((item, index) => (
                         <div key={index} className="nested-group">
                             <input
-                                type="text"
+                                type="number"
+                                step="0.01"
                                 placeholder="Масса"
                                 value={item.mass}
                                 onChange={(e) =>
@@ -258,28 +341,21 @@ function TechnologyForm() {
                                 }
                             />
                             <input
-                                type="text"
+                                type="number"
+                                step="0.01"
                                 placeholder="Объем"
                                 value={item.volume}
                                 onChange={(e) =>
                                     handleNestedChange(index, "volume", e.target.value, "secondaryWaste")
                                 }
                             />
-                            <input
-                                type="text"
-                                placeholder="код ФККО"
-                                value={item.fkkoCode}
-                                onChange={(e) =>
-                                    handleNestedChange(index, "fkkoCode", e.target.value, "secondaryWaste")
+                            <Select
+                                options={fkkoOptions}
+                                onChange={(selectedOption) =>
+                                    handleFkkoChange(selectedOption, index, "secondaryWaste")
                                 }
-                            />
-                            <input
-                                type="text"
-                                placeholder="Наименование по ФККО"
-                                value={item.fkkoName}
-                                onChange={(e) =>
-                                    handleNestedChange(index, "fkkoName", e.target.value, "secondaryWaste")
-                                }
+                                placeholder="Выберите код ФККО"
+                                isSearchable
                             />
                             <button type="button" onClick={() => removeElement("secondaryWaste", index)}>
                                 Удалить
@@ -360,12 +436,41 @@ function TechnologyForm() {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Заключение</label>
+                    <h3>Экспертное заключение</h3>
+                    <label>Основной вывод экологической организации</label>
                     <textarea
                         id="conclusion"
-                        name="conclusion"
-                        value={formData.conclusion}
+                        name="expertInfo.conclusion"
+                        value={formData.expertInfo.conclusion}
                         onChange={handleChange}
+                    />
+                    <label>Дата заключения</label>
+                    <input
+                     type="date"
+                     id="conclusion-date"
+                     name="expertInfo.date"
+                     value={formData.expertInfo.date}
+                     onChange={handleChange}
+
+                    />
+                    <label>Номер заключения</label>
+                    <input
+                     type="number"
+                     id="conclusion-number"
+                     name="expertInfo.number"
+                     value={formData.expertInfo.number}
+                     onChange={handleChange}
+                    placeholder="Введите номер заключения"
+                    />
+                    <label>Наименование органа, выдавшего заключение</label>
+
+                    <input
+                     type="input"
+                     id="conclusion-name"
+                     name="expertInfo.name"
+                     value={formData.expertInfo.name}
+                     onChange={handleChange}
+                    placeholder="Введите наименование органа..."
                     />
                 </div>
                 <button type="submit" className="submit-button">

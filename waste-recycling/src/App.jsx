@@ -3,21 +3,23 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
 import TechnologiesTableView from './pages/technologiesView/TechnologiesView'
 import TechDetails from './pages/TechDetails/TechDetails';
-import Header from './components/Header/Header';
-import TechnologyFormNew from './pages/TechnologyForm/TechnologyFormNew';
-import WasteProducersFormNew from './pages/WasteProducersForm/WasteProducersFormNew';
+import HomePage from './pages/HomePage/HomePage';
+import DynamicHeader from './components/Header/DynamicHeader';
+import TechnologyForm from './pages/TechnologyForm/TechnologyForm';
+import WasteProducersForm from './pages/WasteProducersForm/WasteProducersForm';
 import WasteProducersView from './pages/WasteProducersView.jsx/WasteProducersView';
 function App() {
 
   return (
     <>
       <Router>
-      <Header></Header>
+      <DynamicHeader></DynamicHeader>
       <Routes>
-        <Route path="/" element={<TechnologiesTableView />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/technologyView" element = {<TechnologiesTableView/>}></Route>
         <Route path="/details/:id" element={<TechDetails />} />
-        <Route path = "/technologyForm" element = {<TechnologyFormNew/>}></Route>
-        <Route path = "/wasteProducersForm" element = {<WasteProducersFormNew/>}></Route>
+        <Route path = "/technologyForm" element = {<TechnologyForm/>}></Route>
+        <Route path = "/wasteProducersForm" element = {<WasteProducersForm/>}></Route>
         <Route path = "/wasteProducersView" element = {<WasteProducersView/>}></Route>
       </Routes>
     </Router>

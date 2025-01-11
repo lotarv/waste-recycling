@@ -1,123 +1,154 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Table from "../../components/Table/Table";
-import "./TechDetails.css"
+import "./TechDetails.css";
+
 const TechDetails = () => {
     const { id } = useParams();
 
     // Здесь нужно загрузить данные о записи по ID с помощью API
     const testData = {
+        id: 1,
         name: "Технология переработки пластика",
-        purpose: "Утилизация отходов",
-        description: "Процесс термического разложения пластика",
+        assignment: "Утилизация отходов",
+        characteristic: "Процесс термического разложения пластика",
         resources: {
-            energy: 150,
-            water: 100,
-            disposal: 500
+            energy: 123.0,
+            water: 124.1,
+            usingPerYear: 125.2
         },
-        waste_to_recycle: [
+        fkko: [
             {
-                fkkoCode: "11101100000",
-                fkkoName: "Отходы от предпосевной подготовки семян зерновых культур",
-            }
-        ],
-        secondaryWasteOkpd: [
-            {
-                okpdCode: 19,
-                okpdName: "Кокс и нефтепродукты"
+                name: "Пестициды на основе хлорорганических соединений",
+                code: "11101100011"
             },
             {
-                okpdCode:22,
-                okpdName: "Изделия резиновые и пластмассовые"
+                name: "Отходы средств защиты растений",
+                code: "11101100012"
             }
         ],
-        productivity: "500 тонн/год",
+        okpd: [
+            {
+                name: "Кокс и нефтепродукты",
+                code: "19"
+            },
+            {
+                name: "Изделия резиновые и пластмассовые",
+                code: "22"
+            }
+        ],
+        performance: 500.0,
         secondaryWaste: [
             {
-                mass: 400,
-                volume: 100,
-                fkkoCode: "1111111103",
-                fkkoName: "УГОЛЬНАЯ ПЫЛЬ",
+                fkko: {
+                    name: "Угольная пыль",
+                    code: "1111111103"
+                },
+                mass: 400.0,
+                volume: 100.0
             },
             {
-                mass: 300,
-                volume: 150,
-                fkkoCode: "1111111118",
-                fkkoName: "ДИОКСИД НАТРИЯ",
-            },
+                fkko: {
+                    name: "Диоксид натрия",
+                    code: "1111111118"
+                },
+                mass: 300.0,
+                volume: 150.0
+            }
         ],
-        developerInfo: {
-            adress: "ул.Столовая 95",
+        developer: {
+            address: "ул. Столовая 95",
             phone: "+79886765531",
+            fax: "123456",
             site: "https://superchel.ru"
         },
-        userInfo: {
-            adress: "ул.Магнитная 44",
-            phone: "+7999955531",
-            site: "https://wowowow.ru"
-        },
-        conclusion: "Одобрено. Экспертное заключение №123 от 01.01.2023",
-
-    }
+        users: [
+            {
+                address: "ул. Магнитная 44",
+                phone: "+7999955531",
+                fax: "654321",
+                site: "https://wowowow.ru"
+            },
+        ],
+        useCase: "Используется для производства топлива",
+        expertInfo: {
+            conclusion: "Одобрено",
+            date: "2023-01-01",
+            name: "Экспертное заключение №123"
+        }
+    };
 
     const columnsResources = [
         { Header: "Энергопотребление (кВт/ч):", accessor: "energy" },
-        { Header: "Водопотребление (м/c):", accessor: "water" },
-        { Header: "Использование в год(м^3):", accessor: "disposal" },
-    ]
+        { Header: "Водопотребление (м/с):", accessor: "water" },
+        { Header: "Использование в год (м^3):", accessor: "usingPerYear" }
+    ];
 
-    const wasteColumns = [
-        {Header: "код по ФККО", accessor: "fkkoCode"},
-        {Header: "наименование по ФККО", accessor: "fkkoName"},
-    ]
+    const fkkoColumns = [
+        { Header: "Код по ФККО", accessor: "code" },
+        { Header: "Наименование", accessor: "name" }
+    ];
 
-    const secondaryWasteOkpdColumns = [
-        {Header: "код по ОКПД", accessor: "okpdCode"},
-        {Header: "наименование по ОКПД", accessor: "okpdName"},
-    ]
+    const okpdColumns = [
+        { Header: "Код по ОКПД", accessor: "code" },
+        { Header: "Наименование", accessor: "name" }
+    ];
 
     const secondaryWasteColumns = [
-        {Header: "код по ФККО", accessor: "fkkoCode"},
-        {Header: "наименование по ФККО", accessor: "fkkoName"},
-        {Header: "Масса", accessor: "mass"},
-        {Header: "Объем", accessor: "volume"},
-    ]
+        { Header: "Код по ФККО", accessor: "code" },
+        { Header: "Наименование по ФККО", accessor: "name" },
+        { Header: "Масса (кг)", accessor: "mass" },
+        { Header: "Объем (м^3)", accessor: "volume" }
+    ];
 
     const developerColumns = [
-        {Header: "Адрес", accessor: "adress"},
-        {Header: "Телефон", accessor: "phone"},
-        {Header: "Веб-сайт", accessor: "site"},
-    ]
+        { Header: "Адрес", accessor: "address" },
+        { Header: "Телефон", accessor: "phone" },
+        { Header: "Факс", accessor: "fax" },
+        { Header: "Веб-сайт", accessor: "site" }
+    ];
 
     const userColumns = [
-        {Header: "Адрес", accessor: "adress"},
-        {Header: "Телефон", accessor: "phone"},
-        {Header: "Веб-сайт", accessor: "site"},
-    ]
+        { Header: "Адрес", accessor: "address" },
+        { Header: "Телефон", accessor: "phone" },
+        { Header: "Факс", accessor: "fax" },
+        { Header: "Веб-сайт", accessor: "site" }
+    ];
 
+    const secondaryWasteDataModified = testData.secondaryWaste.map(obj => {
+        return {
+            code: obj.fkko.code,
+            name:obj.fkko.name,
+            mass:obj.mass,
+            volume:obj.volume,
+        }
+    })
+
+    console.log(secondaryWasteDataModified)
+
+    console.log(testData.secondaryWaste[0]["fkko.code"])
     return (
         <div className="tech-details">
             <h1>Подробная информация о технологии</h1>
             <p><strong>Наименование технологии:</strong> {testData.name}</p>
-            <p><strong>Назначение технологии:</strong> {testData.purpose}</p>
-            <p><strong>Краткая характеристика технологического процесса:</strong> {testData.description}</p>
-            <p><strong>Потребляемые ресурсы и отходы:</strong></p>
-            <Table columns={columnsResources} data={[testData.resources]}></Table>
-            <p><strong>Наименование и код по ФККО используемых и(или) обезвреживаемых отходов:</strong></p>
-            <Table columns={wasteColumns} data = {testData.waste_to_recycle}></Table>
-            <p><strong>Наименование и код по ОКПД получаемой вторичной продукции:</strong> </p>
-            <Table columns={secondaryWasteOkpdColumns} data = {testData.secondaryWasteOkpd}></Table>
-            <p><strong>Производительность при получении вторичной продукции:</strong> {testData.productivity}</p>
-            <p><strong>масса (объем), наименование и код по ФККО вторичных отходов, образующихся за год:</strong></p>
-            <Table columns={secondaryWasteColumns} data={testData.secondaryWaste}></Table>
+            <p><strong>Назначение технологии:</strong> {testData.assignment}</p>
+            <p><strong>Краткая характеристика технологического процесса:</strong> {testData.characteristic}</p>
+            <p><strong>Потребляемые ресурсы:</strong></p>
+            <Table columns={columnsResources} data={[testData.resources]} />
+            <p><strong>Наименование и код по ФККО используемых отходов:</strong></p>
+            <Table columns={fkkoColumns} data={testData.fkko} />
+            <p><strong>Наименование и код по ОКПД получаемой продукции:</strong></p>
+            <Table columns={okpdColumns} data={testData.okpd} />
+            <p><strong>Производительность при получении продукции (тонн/год):</strong> {testData.performance}</p>
+            <p><strong>Масса, объем, наименование и код по ФККО вторичных отходов:</strong></p>
+            <Table columns={secondaryWasteColumns} data={secondaryWasteDataModified} />
             <p><strong>Информация о разработчике технологии:</strong></p>
-            <Table columns = {developerColumns} data = {[testData.developerInfo]}></Table>
-            <p><strong>Информация о юридических лицах (индивидуальных предпринимателях), применяющихтехнологию:</strong></p>
-            <Table columns = {userColumns} data = {[testData.userInfo]}></Table>
-            <p><strong>применение технологии:</strong> {testData.id}</p>
-            <p><strong>основной вывод заключения государственной экологической экспертизы на технологию, его дата и номер, наименование органа, выдавшего заключение:</strong></p>
-            {testData.conclusion}
-
+            <Table columns={developerColumns} data={[testData.developer]} />
+            <p><strong>Информация о юридических лицах, применяющих технологию:</strong></p>
+            <Table columns={userColumns} data={testData.users} />
+            <p><strong>Применение технологии:</strong> {testData.useCase}</p>
+            <p><strong>Экспертная информация:</strong></p>
+            <p>{testData.expertInfo.name}, {testData.expertInfo.date}, {testData.expertInfo.conclusion}</p>
         </div>
     );
 };

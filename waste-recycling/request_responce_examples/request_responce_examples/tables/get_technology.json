@@ -1,0 +1,54 @@
+{
+    "id": 0,
+    "name": "String",
+    "assignment": "String",
+    "characteristic": "String",
+    "resources": {
+        "energy": 123.0,
+        "water": 124.1,
+        "usingPerYear": 125.2
+    },
+    "fkko": [
+        {
+            "name": "String",
+            "code": "String"
+        }
+    ],
+    "okpd": [
+        {
+            "name": "String",
+            "code": "String"
+        }
+    ],
+    "performance": 500.0,
+    "secondaryWaste": [
+        {
+            "fkko": {
+                "name": "String",
+                "code": "String"
+            },
+            "mass": 100.0,
+            "volume": 100.0
+        }
+    ],
+    "developer": {
+        "address": "String",
+        "phone": "String",
+        "fax": "String",
+        "site": "String"
+    },
+    "users": [
+        {
+            "address": "String",
+            "phone": "String",
+            "fax": "String",
+            "site": "String"
+        }
+    ],
+    "useCase": "String",
+    "expertInfo": {
+        "conclusion": "String",
+        "date": 1736349196,
+        "name": "String"
+    }
+}

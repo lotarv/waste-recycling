@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Table from "../../components/Table/Table";
+import ProducersTable from "../../components/Table/ProducersTable.jsx";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import fetchProducersData from "../../api/WasteProducersApi";
 
@@ -10,10 +10,10 @@ function WasteProducersView() {
     const [total, setTotal] = useState(0);
 
     const columns = [
-        { Header: "Муниципальное образование", accessor: "municipality" },
-        { Header: "Название организации", accessor: "organization" },
-        { Header: "Код ФККО", accessor: "fkkoCode" },
-        { Header: "Вид отходов", accessor: "wasteTypes" }, // wasteTypes — массив
+        { Header: "Муниципальное образование", accessor: "location" },
+        { Header: "Название организации", accessor: "name" },
+        { Header: "Код ФККО", accessor: "fkko.code" },
+        { Header: "Наименование по ФККО", accessor: "fkko.name" },
         { Header: "Класс опасности", accessor: "hazardClass" },
     ];
 
@@ -25,20 +25,16 @@ function WasteProducersView() {
         }
         loadData();
     }, [page, search]);
-
     return (
         <div>
             <div className="info-block">
                 <h1>Таблица организаций, производящих отходы</h1>
-                <p>Эта таблица предоставляет информацию о муниципальных образованиях и организациях, производящих отходы, включая их наименование, коды ФККО, виды отходов и класс опасности.</p>
+                <p>Эта таблица предоставляет информацию о муниципальных образованиях и организациях, производящих отходы, включая их наименование, коды и наименование ФККО, а также класс опасности.</p>
             </div>
             <SearchBar value={search} onChange={setSearch} />
-            <Table
+            <ProducersTable
                 columns={columns}
-                data={data.map((item) => ({
-                    ...item,
-                    wasteTypes: item.wasteTypes.map((w) => w.type).join(", "), // Преобразуем массив в строку
-                }))}
+                data={data}
             />
             <div style={{ textAlign: "center", marginTop: "20px" }}>
                 <button onClick={() => setPage((p) => Math.max(p - 1, 1))}>

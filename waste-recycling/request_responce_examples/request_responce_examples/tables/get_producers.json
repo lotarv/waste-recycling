@@ -1,0 +1,11 @@
+[
+    {
+        "location": "String",
+        "name": "String",
+        "fkko" : {
+            "code": "String",
+            "name": "String"
+        },
+        "hazardClass": "String"
+    }
+]
