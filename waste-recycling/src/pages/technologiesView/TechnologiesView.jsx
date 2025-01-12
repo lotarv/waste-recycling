@@ -20,13 +20,19 @@ function TechnologiesTableView() {
 
     useEffect(() => {
         async function loadData() {
-            const result = await fetchTableData(page, search);
-            console.log(result);
-            setData(result.data);
-            setTotal(result.total);
+            try {
+                const result = await fetchTableData(page, search); // Запрос к API
+                console.log(result);
+                setData(result.data);
+                setTotal(result.total);
+            } catch (error) {
+                console.error("Ошибка загрузки данных:", error);
+                setData([]); // Если произошла ошибка, сбрасываем данные
+                setTotal(0); // Сбрасываем общее количество
+            }
         }
         loadData();
-    }, [page, search])
+    }, [page, search]);
     return (
         <div>
             <div className="info-block">
