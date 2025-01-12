@@ -178,7 +178,7 @@
 
 
 async function fetchTableData(page = 1, search = "") {
-    const apiUrl = `http:/localhost:8080/technologies?filter=${encodeURIComponent(search)}&page=${page - 1}`;
+    const apiUrl = `http://localhost:8080/technologies?filter=${encodeURIComponent(search)}&page=${page - 1}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -194,8 +194,8 @@ async function fetchTableData(page = 1, search = "") {
 
         const result = await response.json(); // Предполагается, что сервер возвращает объект с данными
         return {
-            data: result.data || result, // Если API возвращает массив
-            total: result.total || result.length, // Если API возвращает объект с общим количеством
+            data: result.technologies, // Если API возвращает массив
+            total: result.amount, // Если API возвращает объект с общим количеством
         };
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error.message);

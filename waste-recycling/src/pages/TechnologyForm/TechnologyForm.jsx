@@ -77,21 +77,6 @@ function TechnologyForm() {
         if (!/^(\+7|8)\d{10}$/.test(formData.userInfo.phone))
             newErrors["userInfo.phone"] = "Некорректный номер телефона потребителя";
 
-        // Валидация кода ФККО
-        formData.waste_to_recycle.forEach((item, index) => {
-            if (!/^\d{10}[0-5]$/.test(item.fkkoCode)) {
-                newErrors[`waste_to_recycle_${index}_fkkoCode`] =
-                    "Код ФККО должен быть из 11 символов, последний символ — число от 0 до 5";
-            }
-        });
-
-        formData.secondaryWaste.forEach((item, index) => {
-            if (!/^\d{10}[0-5]$/.test(item.fkkoCode)) {
-                newErrors[`secondaryWaste_${index}_fkkoCode`] =
-                    "Код ФККО должен быть из 11 символов, последний символ — число от 0 до 5";
-            }
-        });
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };

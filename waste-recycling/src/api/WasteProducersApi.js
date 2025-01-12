@@ -77,7 +77,7 @@
 
 
 export async function fetchProducersData(page = 1, search = "") {
-    const apiUrl = `http:/localhost:8080/producers?filter=${encodeURIComponent(search)}&page=${page - 1}`;
+    const apiUrl = `http://localhost:8080/producers?filter=${encodeURIComponent(search)}&page=${page - 1}`;
 
     try {
         const response = await fetch(apiUrl, {
