@@ -34,7 +34,7 @@
 
 export async function loadOkpdOptions(inputValue) {
 
-    if (!inputValue) return [];
+    if (!inputValue || inputValue.length < 3) return [];
 
     const apiUrl = `http://localhost:8080/okpds?filter=${encodeURIComponent(inputValue)}`
 

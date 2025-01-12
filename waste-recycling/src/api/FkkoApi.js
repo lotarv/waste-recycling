@@ -42,7 +42,7 @@
 
 
 export async function loadFkkoOptions(inputValue){
-    if (!inputValue) return [];
+    if (!inputValue || inputValue.length < 3) return [];
     const apiUrl = `http://localhost:8080/fkkos?filter=${encodeURIComponent(inputValue)}`
     try {
         const response = await fetch(apiUrl);
