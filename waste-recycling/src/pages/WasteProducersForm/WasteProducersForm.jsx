@@ -13,6 +13,8 @@ function WasteProducersForm() {
 
   const [errors, setErrors] = useState({});
 
+  const api_url = "http://localhost:3000/api/producers"; //Указать путь к API
+
   // Преобразование данных ФККО в формат для Select
   const fkkoOptions = fetchFkkos().map((item) => ({
     value: {
@@ -55,12 +57,32 @@ function WasteProducersForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
       console.log("Submitted Data:", formData);
-      // Здесь можно отправить данные через API
+      try {
+        const response = await fetch(api_url, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (!response.ok){
+          throw new Error('Ошибка при отправке данных');
+        }
+
+        const result = await response.json();
+        console.log('Ответ сервера: ', result);
+
+        alert('Данные успешно отправлены');
+      } catch(error) {
+        console.error('Ошибка: ', error);
+        alert('Ошибка при отправке данных. Проверьте соединение с сервером')
+      }
     }
   };
 
