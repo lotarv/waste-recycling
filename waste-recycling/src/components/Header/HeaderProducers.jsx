@@ -1,6 +1,6 @@
 import SiteLogo from "../../assets/recycle.png";
 import { useNavigate } from "react-router-dom";
-import './header.css';
+import './Header.css';
 
 function HeaderProducers() {
   const navigate = useNavigate();

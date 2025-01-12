@@ -1,4 +1,4 @@
-import "./searchBar.css"
+import "./SearchBar.css"
 function SearchBar({value, onChange}) {
     return(
         <div className="search-bar-container">
