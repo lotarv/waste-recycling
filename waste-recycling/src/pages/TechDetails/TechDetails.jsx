@@ -12,7 +12,7 @@ const TechDetails = () => {
 
     const [error, setError] = useState(null);
 
-    const api_url = 'http://localhost/api/technology';
+    const api_url = `http://localhost:8080/technology${id}`;
 
     useEffect(() => {
         const fetchData = async() => {

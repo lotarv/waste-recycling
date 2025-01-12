@@ -14,15 +14,15 @@ function TechnologyForm() {
         secondaryWasteOkpd: [{ okpdCode: "", okpdName: "" }],
         productivity: "",
         secondaryWaste: [{ mass: "", volume: "", fkkoCode: "", fkkoName: "" }],
-        developerInfo: { adress: "", phone: "", site: "", fax: "" },
-        userInfo: { adress: "", phone: "", site: "", fax: "" },
+        developerInfo: { address: "", phone: "", site: "", fax: "" },
+        userInfo: { address: "", phone: "", site: "", fax: "" },
         expertInfo: { conclusion: "", date: "", name: "", number: "" },
         useCase: "",
     });
 
     const [errors, setErrors] = useState({});
 
-    const api_url = 'http://localhost:300/api/technology'; //Добавить путь к API
+    const api_url = 'http://localhost:8080/technology'; //Добавить путь к API
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -63,14 +63,14 @@ function TechnologyForm() {
             newErrors.productivity = "Укажите корректную производительность";
 
         // Валидация разработчиков
-        if (!formData.developerInfo.adress)
-            newErrors["developerInfo.adress"] = "Адрес разработчика обязателен";
+        if (!formData.developerInfo.address)
+            newErrors["developerInfo.address"] = "Адрес разработчика обязателен";
         if (!/^(\+7|8)\d{10}$/.test(formData.developerInfo.phone))
             newErrors["developerInfo.phone"] = "Некорректный номер телефона разработчика";
 
         // Валидация потребителей
-        if (!formData.userInfo.adress)
-            newErrors["userInfo.adress"] = "Адрес потребителя обязателен";
+        if (!formData.userInfo.address)
+            newErrors["userInfo.address"] = "Адрес потребителя обязателен";
         if (!/^(\+7|8)\d{10}$/.test(formData.userInfo.phone))
             newErrors["userInfo.phone"] = "Некорректный номер телефона потребителя";
 
@@ -165,8 +165,7 @@ function TechnologyForm() {
                     throw new Error('Ошибка при отправке данных')
                 }
 
-                const result = await response.json();
-                console.log('Ответ сервера: ', result);
+                console.log('Ответ сервера: ', response.status);
                 alert("Данные успешно отправлены!");
             } catch(error) {
                 console.error("Ошибка:", error);
@@ -399,14 +398,14 @@ function TechnologyForm() {
                     <label>Информация о разработчике</label>
                     <input
                         type="text"
-                        name="developerInfo.adress"
+                        name="developerInfo.address"
                         placeholder="Адрес"
-                        value={formData.developerInfo.adress}
+                        value={formData.developerInfo.address}
                         onChange={handleChange}
 
                     />
-                    {errors["developerInfo.adress"] && (
-                        <span className="error">{errors["developerInfo.adress"]}</span>
+                    {errors["developerInfo.address"] && (
+                        <span className="error">{errors["developerInfo.address"]}</span>
                     )}
                     <input
                         type="text"
@@ -438,14 +437,14 @@ function TechnologyForm() {
                     <label>Информация о потребителе</label>
                     <input
                         type="text"
-                        name="userInfo.adress"
+                        name="userInfo.address"
                         placeholder="Адрес"
-                        value={formData.userInfo.adress}
+                        value={formData.userInfo.address}
                         onChange={handleChange}
 
                     />
-                    {errors["userInfo.adress"] && (
-                        <span className="error">{errors["userInfo.adress"]}</span>
+                    {errors["userInfo.address"] && (
+                        <span className="error">{errors["userInfo.address"]}</span>
                     )}
                     <input
                         type="phone"
