@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import fetchFkkos from "../../api/FkkoApi";
+import AsyncSelect from "react-select/async"
+import { loadFkkoOptions } from "../../api/FkkoApi";
 import "./WasteProducersForm.css";
 
 function WasteProducersForm() {
@@ -15,14 +16,14 @@ function WasteProducersForm() {
 
   const api_url = "http://localhost:8080/producer"; //Указать путь к API
 
-  // Преобразование данных ФККО в формат для Select
-  const fkkoOptions = fetchFkkos().map((item) => ({
-    value: {
-        name: item.name,
-        code: item.code,
-    },
-    label: `${item.code} - ${item.name}`,
-}));
+//   // Преобразование данных ФККО в формат для Select
+//   const fkkoOptions = fetchFkkos().map((item) => ({
+//     value: {
+//         name: item.name,
+//         code: item.code,
+//     },
+//     label: `${item.code} - ${item.name}`,
+// }));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,12 +123,14 @@ function WasteProducersForm() {
 
         <div className="form-group">
           <label htmlFor="fkko">Код ФККО</label>
-          <Select
-            options={fkkoOptions}
+          <AsyncSelect
+            cacheOptions
+            loadOptions={loadFkkoOptions}
             onChange={handleFkkoChange}
             placeholder="Выберите код ФККО"
             isSearchable
           />
+          
           {errors.fkko && <span className="error">{errors.fkko}</span>}
         </div>
 

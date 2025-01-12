@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import AsyncSelect from 'react-select/async';
 import assignments from "../../data/assignments";
 import "./TechnologyForm.css";
-import fetchFkkos from "../../api/FkkoApi";
-import fetchOkpds from "../../api/OkpdApi";
+// import fetchFkkos from "../../api/FkkoApi";
+import { loadOkpdOptions } from "../../api/OkpdApi";
+import { loadFkkoOptions } from "../../api/FkkoApi";
+// import fetchOkpds from "../../api/OkpdApi";
 function TechnologyForm() {
     const [formData, setFormData] = useState({
         name: "",
@@ -149,14 +152,14 @@ function TechnologyForm() {
     const handleSubmit = async (e) => {
         console.log("kek")
         e.preventDefault();
-        if (validateForm()){
+        if (validateForm()) {
             const json_to_post = structureNewJson(formData);
             console.log("trying to post data: ", json_to_post);
             try {
                 const response = await fetch(api_url, {
                     method: 'POST',
                     headers: {
-                        'Content-type':'application/json',
+                        'Content-type': 'application/json',
                     },
                     body: JSON.stringify(json_to_post),
                 })
@@ -167,12 +170,12 @@ function TechnologyForm() {
 
                 console.log('Ответ сервера: ', response.status);
                 alert("Данные успешно отправлены!");
-            } catch(error) {
+            } catch (error) {
                 console.error("Ошибка:", error);
                 alert('Ошибка при отправке данных. Проверьте соединение с сервером')
             }
         }
-        
+
     };
 
     // Опции для Select
@@ -181,21 +184,21 @@ function TechnologyForm() {
         label: item,
     }));
 
-    const fkkoOptions = fetchFkkos().map((item) => ({
-        value: {
-            name: item.name,
-            code: item.code,
-        },
-        label: `${item.code} - ${item.name}`,
-    }));
+    // const fkkoOptions = fetchFkkos().map((item) => ({
+    //     value: {
+    //         name: item.name,
+    //         code: item.code,
+    //     },
+    //     label: `${item.code} - ${item.name}`,
+    // }));
 
-    const okpdOptions = fetchOkpds().map((item) => ({
-        value: {
-            name: item.name,
-            code: item.code,
-        },
-        label: `${item.code} - ${item.name}`,
-    }));
+    // const okpdOptions = fetchOkpds().map((item) => ({
+    //     value: {
+    //         name: item.name,
+    //         code: item.code,
+    //     },
+    //     label: `${item.code} - ${item.name}`,
+    // }));
 
     return (
         <div className="technologies-form">
@@ -296,8 +299,9 @@ function TechnologyForm() {
                     <label>Отходы для переработки</label>
                     {formData.waste_to_recycle.map((item, index) => (
                         <div key={index} className="nested-group">
-                            <Select
-                                options={fkkoOptions}
+                            <AsyncSelect
+                                cacheOptions
+                                loadOptions={loadFkkoOptions} // Функция подгрузки данных
                                 onChange={(selectedOption) =>
                                     handleFkkoChange(selectedOption, index, "waste_to_recycle")
                                 }
@@ -328,8 +332,9 @@ function TechnologyForm() {
                     <label>Продукты переработки (ОКПД)</label>
                     {formData.secondaryWasteOkpd.map((item, index) => (
                         <div key={index} className="nested-group">
-                            <Select
-                                options={okpdOptions}
+                            <AsyncSelect
+                                cacheOptions
+                                loadOptions={loadOkpdOptions}
                                 onChange={(selectedOption) =>
                                     handleOkpdChange(selectedOption, index, "secondaryWasteOkpd")
                                 }
@@ -372,10 +377,11 @@ function TechnologyForm() {
                                     handleNestedChange(index, "volume", e.target.value, "secondaryWaste")
                                 }
                             />
-                            <Select
-                                options={fkkoOptions}
+                            <AsyncSelect
+                                cacheOptions
+                                loadOptions={loadFkkoOptions} // Функция подгрузки данных
                                 onChange={(selectedOption) =>
-                                    handleFkkoChange(selectedOption, index, "secondaryWaste")
+                                    handleFkkoChange(selectedOption, index, "waste_to_recycle")
                                 }
                                 placeholder="Выберите код ФККО"
                                 isSearchable
