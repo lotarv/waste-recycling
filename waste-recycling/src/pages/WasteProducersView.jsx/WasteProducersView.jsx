@@ -19,9 +19,15 @@ function WasteProducersView() {
 
     useEffect(() => {
         async function loadData() {
-            const result = await fetchProducersData(page, search);
-            setData(result.data);
-            setTotal(result.total);
+            try {
+                const result = await fetchProducersData(page, search); // Запрос к API
+                setData(result.data);
+                setTotal(result.total);
+            } catch (error) {
+                console.error("Ошибка загрузки данных:", error);
+                setData([]); // Если произошла ошибка, сбрасываем данные
+                setTotal(0); // Сбрасываем общее количество
+            }
         }
         loadData();
     }, [page, search]);
