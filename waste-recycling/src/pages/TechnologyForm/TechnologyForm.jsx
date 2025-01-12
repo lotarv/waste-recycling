@@ -9,18 +9,20 @@ function TechnologyForm() {
         name: "",
         assignment: "",
         description: "",
-        resources: { energy: "", water: "", disposal: ""},
+        resources: { energy: "", water: "", disposal: "" },
         waste_to_recycle: [{ fkkoCode: "", fkkoName: "" }],
         secondaryWasteOkpd: [{ okpdCode: "", okpdName: "" }],
         productivity: "",
         secondaryWaste: [{ mass: "", volume: "", fkkoCode: "", fkkoName: "" }],
-        developerInfo: { adress: "", phone: "", site: "" },
-        userInfo: { adress: "", phone: "", site: "" },
-        expertInfo: {conclusion:"", date:"", name:"", number:""},
+        developerInfo: { adress: "", phone: "", site: "", fax: "" },
+        userInfo: { adress: "", phone: "", site: "", fax: "" },
+        expertInfo: { conclusion: "", date: "", name: "", number: "" },
         useCase: "",
     });
 
     const [errors, setErrors] = useState({});
+
+    const api_url = 'http://localhost:300/api/technology'; //Добавить путь к API
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -123,7 +125,7 @@ function TechnologyForm() {
             developer: data.developerInfo,
             users: [data.userInfo],
             useCase: data.useCase,
-            expertInfo: {...data.expertInfo, date:Math.floor(Date.parse(data.expertInfo.date) / 1000)},
+            expertInfo: { ...data.expertInfo, date: Math.floor(Date.parse(data.expertInfo.date) / 1000) },
         }
 
         return dataToPost;
@@ -142,14 +144,36 @@ function TechnologyForm() {
         updatedWaste[index].okpdName = selectedOption.value.name; // Обновляем наименование
         setFormData({ ...formData, [key]: updatedWaste });
     };
-    
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         console.log("kek")
         e.preventDefault();
-        // if (!validateForm()) return;
-        console.log("formData:", formData);
-        console.log(structureNewJson(formData))
+        if (validateForm()){
+            const json_to_post = structureNewJson(formData);
+            console.log("trying to post data: ", json_to_post);
+            try {
+                const response = await fetch(api_url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type':'application/json',
+                    },
+                    body: JSON.stringify(json_to_post),
+                })
+
+                if (!response.ok) {
+                    throw new Error('Ошибка при отправке данных')
+                }
+
+                const result = await response.json();
+                console.log('Ответ сервера: ', result);
+                alert("Данные успешно отправлены!");
+            } catch(error) {
+                console.error("Ошибка:", error);
+                alert('Ошибка при отправке данных. Проверьте соединение с сервером')
+            }
+        }
+        
     };
 
     // Опции для Select
@@ -224,7 +248,7 @@ function TechnologyForm() {
                         name="useCase"
                         value={formData.useCase}
                         onChange={handleChange}
-                        
+
 
                     />
                     {errors.description && <span className="error">{errors.description}</span>}
@@ -286,7 +310,7 @@ function TechnologyForm() {
                                     {errors[`waste_to_recycle_${index}_fkkoCode`]}
                                 </span>
                             )}
-                            
+
                             <button type="button" onClick={() => removeElement("waste_to_recycle", index)}>
                                 Удалить
                             </button>
@@ -402,6 +426,13 @@ function TechnologyForm() {
                         value={formData.developerInfo.site}
                         onChange={handleChange}
                     />
+                    <input
+                        type="text"
+                        name="developerInfo.fax"
+                        placeholder="Факс"
+                        value={formData.developerInfo.fax}
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className="form-group">
                     <label>Информация о потребителе</label>
@@ -417,7 +448,7 @@ function TechnologyForm() {
                         <span className="error">{errors["userInfo.adress"]}</span>
                     )}
                     <input
-                        type="text"
+                        type="phone"
                         name="userInfo.phone"
                         placeholder="Телефон"
                         value={formData.userInfo.phone}
@@ -434,6 +465,14 @@ function TechnologyForm() {
                         value={formData.userInfo.site}
                         onChange={handleChange}
                     />
+
+                    <input
+                        type="text"
+                        name="userInfo.fax"
+                        placeholder="Факс"
+                        value={formData.userInfo.fax}
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className="form-group">
                     <h3>Экспертное заключение</h3>
@@ -446,31 +485,31 @@ function TechnologyForm() {
                     />
                     <label>Дата заключения</label>
                     <input
-                     type="date"
-                     id="conclusion-date"
-                     name="expertInfo.date"
-                     value={formData.expertInfo.date}
-                     onChange={handleChange}
+                        type="date"
+                        id="conclusion-date"
+                        name="expertInfo.date"
+                        value={formData.expertInfo.date}
+                        onChange={handleChange}
 
                     />
                     <label>Номер заключения</label>
                     <input
-                     type="number"
-                     id="conclusion-number"
-                     name="expertInfo.number"
-                     value={formData.expertInfo.number}
-                     onChange={handleChange}
-                    placeholder="Введите номер заключения"
+                        type="number"
+                        id="conclusion-number"
+                        name="expertInfo.number"
+                        value={formData.expertInfo.number}
+                        onChange={handleChange}
+                        placeholder="Введите номер заключения"
                     />
                     <label>Наименование органа, выдавшего заключение</label>
 
                     <input
-                     type="input"
-                     id="conclusion-name"
-                     name="expertInfo.name"
-                     value={formData.expertInfo.name}
-                     onChange={handleChange}
-                    placeholder="Введите наименование органа..."
+                        type="input"
+                        id="conclusion-name"
+                        name="expertInfo.name"
+                        value={formData.expertInfo.name}
+                        onChange={handleChange}
+                        placeholder="Введите наименование органа..."
                     />
                 </div>
                 <button type="submit" className="submit-button">
