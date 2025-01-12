@@ -9,6 +9,9 @@ function WasteProducersView() {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
 
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     const columns = [
         { Header: "Муниципальное образование", accessor: "location" },
         { Header: "Название организации", accessor: "name" },
@@ -27,10 +30,31 @@ function WasteProducersView() {
                 console.error("Ошибка загрузки данных:", error);
                 setData([]); // Если произошла ошибка, сбрасываем данные
                 setTotal(0); // Сбрасываем общее количество
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         }
         loadData();
     }, [page, search]);
+
+    if (loading) {
+        return <div>Загрузка данных...</div>
+    }
+    if (error) {
+        return <div>{error}</div>
+    }
+
+    if (data == null || data.length == 0) {
+        return <div style={{display:"flex", flexDirection:"column"}}>
+            <div className="info-block">
+                <h1>Таблица организаций, производящих отходы</h1>
+                <p>Эта таблица предоставляет информацию о муниципальных образованиях и организациях, производящих отходы, включая их наименование, коды и наименование ФККО, а также класс опасности.</p>
+            </div>
+            <SearchBar value={search} onChange={setSearch} />
+            <div style={{marginTop:"20px", alignSelf:"center"}}>Данные по вашему запросу отстутствуют</div>
+        </div>
+    }
     return (
         <div>
             <div className="info-block">

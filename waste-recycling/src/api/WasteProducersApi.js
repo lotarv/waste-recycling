@@ -93,8 +93,8 @@ export async function fetchProducersData(page = 1, search = "") {
 
         const result = await response.json(); // Ожидаем JSON-ответ от сервера
         return {
-            data: result.data || result, // Если API возвращает массив
-            total: result.total || result.length, // Если API возвращает объект с общим количеством
+            data: result.producers, // Если API возвращает массив
+            total: result.amount, // Если API возвращает объект с общим количеством
         };
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error.message);

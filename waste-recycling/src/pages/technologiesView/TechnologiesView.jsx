@@ -7,7 +7,11 @@ function TechnologiesTableView() {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
-    const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState(0);
+
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState(null);
 
     const columns = [
         { Header: "Наименование технологии", accessor: "name" },
@@ -29,10 +33,31 @@ function TechnologiesTableView() {
                 console.error("Ошибка загрузки данных:", error);
                 setData([]); // Если произошла ошибка, сбрасываем данные
                 setTotal(0); // Сбрасываем общее количество
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         }
         loadData();
     }, [page, search]);
+
+    if (loading) {
+        return <div>Загрузка данных...</div>
+    }
+    if (error) {
+        return <div>{error}</div>
+    }
+
+    if (data == null || data.length == 0) {
+        return <div style={{display:"flex", flexDirection:"column"}}>
+            <div className="info-block">
+                <h1>Таблица технологий переработки отходов</h1>
+                <p>Эта таблица содержит информацию о существующих технологиях переработки отходов, включая их наименование, назначение, описание, коды ФККО, и другую ключевую информацию. Для подробного ознакомления с каждой технологией нажмите на ссылку "подробнее"</p>
+            </div>
+            <SearchBar value={search} onChange={setSearch}></SearchBar>
+            <div style={{marginTop:"20px", alignSelf:"center"}}>Данные по вашему запросу отстутствуют</div>
+        </div>
+    }
     return (
         <div>
             <div className="info-block">

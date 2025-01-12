@@ -178,7 +178,7 @@
 
 
 async function fetchTableData(page = 1, search = "") {
-    const apiUrl = `/technologies?filter=${encodeURIComponent(search)}&page=${page - 1}`;
+    const apiUrl = `http:/localhost:8080/technologies?filter=${encodeURIComponent(search)}&page=${page - 1}`;
 
     try {
         const response = await fetch(apiUrl, {
