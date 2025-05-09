@@ -1,0 +1,117 @@
+.profile-page {
+  background-color: #e6f4ea;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  color: #2d6a4f;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #2d6a4f;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.1em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+strong {
+  color: #2d6a4f;
+}
+
+.producer-info {
+  margin-top: 20px;
+}
+
+.producer-form {
+  margin-top: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  color: #2d6a4f;
+  font-size: 1em;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #2d6a4f;
+}
+
+.success-text {
+  color: #2d6a4f;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  background-color: #2d6a4f;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #1e4c38;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+}

@@ -1,140 +1,149 @@
-/* Общие стили */
 .statistics-view {
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-  background-color: #f9fafb;
+  background-color: #e6f4ea;
+  min-height: calc(100vh - 70px); /* Учитываем высоту хедера */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-/* Заголовок */
-.statistics-view h1 {
-  font-size: 28px;
-  font-weight: bold;
+h1 {
+  color: #2d6a4f;
+  font-size: 2.8em;
   text-align: center;
-  margin-bottom: 16px;
-  color: #1f2937;
+  margin-bottom: 25px;
 }
 
-/* Описание */
-.statistics-view p {
-  font-size: 16px;
-  color: #6b7280;
+p {
+  font-size: 1.3em;
+  line-height: 1.6;
+  color: #333;
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 50px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Карточка */
 .card {
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  margin-bottom: 32px;
-}
-
-/* Подзаголовок карточки */
-.card h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: #1f2937;
-}
-
-/* Контейнер карты */
-.map-container {
+  padding: 40px;
+  margin-bottom: 50px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1400px;
   width: 100%;
-  max-height: 400px;
-  overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* Легенда карты */
-.map-legend {
-  font-size: 14px;
-  color: #6b7280;
-  margin-top: 8px;
+h2 {
+  color: #2d6a4f;
+  font-size: 2em;
+  margin-bottom: 25px;
   text-align: center;
 }
 
-/* Контейнер диаграммы */
-.chart-container {
-  max-width: 500px;
+.map-container {
+  max-width: 100%;
+  height: 400px;
+  overflow: hidden;
   margin: 0 auto;
 }
 
-/* Контейнер таблицы */
-.table-container {
+.map-container svg {
   width: 100%;
-  overflow-x: auto;
+  height: 100%;
+  display: block;
 }
 
-/* Стили таблицы */
-.table-container table {
+.chart-container {
+  max-width: 600px; /* Ограничиваем ширину */
+  height: 400px; /* Фиксированная высота */
+  margin: 0 auto;
+  display: flex; /* Центрируем содержимое */
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.chart-container canvas {
+  max-width: 100% !important; /* Ограничиваем холст */
+  max-height: 100% !important;
+  width: auto !important; /* Автоматическая ширина для пропорций */
+  height: auto !important;
+}
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.table-container th,
-.table-container td {
-  padding: 12px;
+th, td {
+  padding: 15px;
   text-align: left;
-  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.1em;
 }
 
-.table-container th {
-  background-color: #f3f4f6;
-  font-weight: 600;
-  color: #1f2937;
+th {
+  background-color: #c2e5d3;
+  color: #2d6a4f;
+  font-weight: bold;
 }
 
-.table-container td {
-  border-bottom: 1px solid #e5e7eb;
-  color: #374151;
+tr:hover {
+  background-color: #f5f5f5;
 }
 
-.table-container tr:last-child td {
-  border-bottom: none;
+.map-legend {
+  font-size: 1.1em;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-  .statistics-view {
-    padding: 16px;
+  h1 {
+    font-size: 2.2em;
   }
 
-  .statistics-view h1 {
-    font-size: 24px;
+  h2 {
+    font-size: 1.7em;
+  }
+
+  p {
+    font-size: 1.1em;
   }
 
   .card {
-    padding: 16px;
+    padding: 25px;
   }
 
-  .card h2 {
-    font-size: 18px;
+  .map-container {
+    height: 300px;
   }
 
   .chart-container {
     max-width: 100%;
+    height: 300px;
   }
 
-  .table-container th,
-  .table-container td {
-    font-size: 12px;
-    padding: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .statistics-view h1 {
-    font-size: 20px;
+  .chart-container canvas {
+    max-width: 90% !important; /* Чуть меньше на мобильных */
+    max-height: 90% !important;
   }
 
-  .statistics-view p {
-    font-size: 14px;
-  }
-
-  .map-legend {
-    font-size: 12px;
+  th, td {
+    padding: 10px;
+    font-size: 1em;
   }
 }

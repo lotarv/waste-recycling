@@ -11,9 +11,12 @@ import WasteProducersForm from './pages/WasteProducersForm/WasteProducersForm';
 import WasteProducersView from './pages/WasteProducersView.jsx/WasteProducersView';
 import Header from './components/Header/Header';
 import StatisticsView from './pages/StatisticsView/StatisticsView';
-import RealizatorsView from './pages/RealizatorsView/RealizatorsView';
+import RealizatorsView from './pages/RealizatorsView/ImplementersView';
 import FkkoView from './pages/FkkoView/FkkoView';
 import OkpdView from './pages/OkpdView/OkpdView';
+import ImplementersView from './pages/RealizatorsView/ImplementersView';
+import LoginPage from './pages/LoginPage/LoginPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 function App() {
 
   return (
@@ -22,15 +25,17 @@ function App() {
       <Header></Header>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/technologyView" element = {<TechnologiesTableView/>}></Route>
+        <Route path="/technologyView" element={<TechnologiesTableView />} />
         <Route path="/details/:id" element={<TechDetails />} />
-        <Route path = "/technologyForm" element = {<TechnologyForm/>}></Route>
-        <Route path = "/wasteProducersForm" element = {<WasteProducersForm/>}></Route>
-        <Route path = "/wasteProducersView" element = {<WasteProducersView/>}></Route>
+        <Route path="/technologyForm" element={<TechnologyForm />} />
+        <Route path="/wasteProducersForm" element={<WasteProducersForm />} />
+        <Route path="/wasteProducersView" element={<WasteProducersView />} />
         <Route path="/statisticsView" element={<StatisticsView />} />
-        <Route path="/realizatorsView" element={<RealizatorsView />} />
+        <Route path="/realizatorsView" element={<ImplementersView />} />
         <Route path="/okpdView" element={<OkpdView />} />
         <Route path="/fkkoView" element={<FkkoView />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
     </>
