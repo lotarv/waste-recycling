@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TechnologiesTable from "../../components/Table/TechnologiesTable.jsx";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import fetchTableData from "../../api/TechnologyApi";
+import SearchBar from "../../components/SearchBar/SearchBar.jsx";
+import fetchTableData from "../../api/TechnologyApi.js";
 
 function TechnologiesTableView() {
     const [data, setData] = useState([]);

@@ -1,0 +1,140 @@
+/* Общие стили */
+.statistics-view {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #f9fafb;
+}
+
+/* Заголовок */
+.statistics-view h1 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+
+/* Описание */
+.statistics-view p {
+  font-size: 16px;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* Карточка */
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+/* Подзаголовок карточки */
+.card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+
+/* Контейнер карты */
+.map-container {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+/* Легенда карты */
+.map-legend {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Контейнер диаграммы */
+.chart-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Контейнер таблицы */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Стили таблицы */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table-container th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.table-container td {
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+}
+
+.table-container tr:last-child td {
+  border-bottom: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .statistics-view {
+    padding: 16px;
+  }
+
+  .statistics-view h1 {
+    font-size: 24px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .chart-container {
+    max-width: 100%;
+  }
+
+  .table-container th,
+  .table-container td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statistics-view h1 {
+    font-size: 20px;
+  }
+
+  .statistics-view p {
+    font-size: 14px;
+  }
+
+  .map-legend {
+    font-size: 12px;
+  }
+}

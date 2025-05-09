@@ -1,0 +1,51 @@
+.fkko-view {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-bar-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.table-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.fkko-table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+}
+
+.fkko-table th,
+.fkko-table td {
+    padding: 10px;
+    margin: 0;
+    max-width: 200px;
+    border: 1px solid #ddd;
+}
+
+.fkko-table th {
+    background-color: #2d6a4f;
+    color: #fff;
+    font-weight: bold;
+}
+
+.fkko-table tr:nth-child(even) {
+    background-color: #e6f4ea;
+}
+
+.fkko-table tr:hover {
+    background-color: #c2e5d3;
+    cursor: pointer;
+}
+
+.fkko-table td {
+    word-break: break-word;
+}

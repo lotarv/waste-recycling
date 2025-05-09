@@ -1,56 +1,73 @@
 .header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #f9f9f9;
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 20px;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #f0f0f0;
 }
 
-.logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
-}
-
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    flex-grow: 1;
-}
-
-.dropdown {
+.header-nav ul {
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
 }
 
-.dropdown-label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
+.nav-link {
+    cursor: default;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1rem;
 }
 
-.dropdown-select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+.nav-link:hover {
+    color: #007bff;
+}
+
+/* Стили для dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
     cursor: pointer;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dropdown-select:hover {
-    border-color: #40916c;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.dropdown-menu {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    min-width: 200px;
+    z-index: 1000;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.dropdown-select:focus {
-    border-color: #52b788;
-    outline: none;
-    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+.dropdown-menu li {
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-item {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    font-size: 1rem;
+    cursor:pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+}
+
+.dropdown:hover .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
 }

@@ -1,40 +1,49 @@
-import SiteLogo from "../../assets/recycle.png";
-import { useNavigate } from "react-router-dom";
-import './Header.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Header.css";
 
 function Header() {
-  const navigate = useNavigate();
-
-  const handleSelectChange = (e) => {
-    const selectedPath = e.target.value;
-    if (selectedPath) {
-      navigate(selectedPath);
-    }
-  };
-
-  const handleLogoClick = () => {
-    navigate("/"); // Перенаправление на HomePage
-  };
-
-  return (
-    <header className="header">
-      <img src={SiteLogo} alt="Логотип" className="logo" onClick={handleLogoClick} style={{cursor:"pointer"}} />
-      <h1 className="title">Система учета технологий переработки и утилизации отходов</h1>
-      <div className="dropdown">
-        <label htmlFor="navigation-select" className="dropdown-label">Навигация:</label>
-        <select
-          id="navigation-select"
-          className="dropdown-select"
-          onChange={handleSelectChange}
-          defaultValue=""
-        >
-          <option value="" disabled>Выберите раздел</option>
-          <option value="/technologyView">Технологии переработки отходов</option>
-          <option value="/wasteProducersView">Организации-производители отходов</option>
-        </select>
-      </div>
-    </header>
-  );
+    return (
+        <header className="header">
+            <Link to="/">
+              <h1>Система управления отходами</h1>
+            </Link>
+            <nav className="header-nav">
+                <ul>
+                    <li className="dropdown">
+                        <span className="nav-link dropdown-toggle">Справочники</span>
+                        <ul className="dropdown-menu">
+                            <li>
+                                <Link to="/fkkoView" className="dropdown-item">
+                                    Коды ФККО
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/okpdView" className="dropdown-item">
+                                    Коды ОКПД
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/technologyView" className="dropdown-item">
+                                    Технологии переработки отходов
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <Link to="/statisticsView" className="nav-link">
+                            Статистика
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/realizatorsView" className="nav-link">
+                            Реализаторы технологий
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    );
 }
 
 export default Header;

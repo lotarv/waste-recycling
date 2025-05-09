@@ -1,19 +1,25 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
-import TechnologiesTableView from './pages/technologiesView/TechnologiesView'
+import "./index.css"
+import TechnologiesTableView from './pages/TechnologiesView/TechnologiesView'
 import TechDetails from './pages/TechDetails/TechDetails';
 import HomePage from './pages/HomePage/HomePage';
 import DynamicHeader from './components/Header/DynamicHeader';
 import TechnologyForm from './pages/TechnologyForm/TechnologyForm';
 import WasteProducersForm from './pages/WasteProducersForm/WasteProducersForm';
 import WasteProducersView from './pages/WasteProducersView.jsx/WasteProducersView';
+import Header from './components/Header/Header';
+import StatisticsView from './pages/StatisticsView/StatisticsView';
+import RealizatorsView from './pages/RealizatorsView/RealizatorsView';
+import FkkoView from './pages/FkkoView/FkkoView';
+import OkpdView from './pages/OkpdView/OkpdView';
 function App() {
 
   return (
     <>
       <Router>
-      <DynamicHeader></DynamicHeader>
+      <Header></Header>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/technologyView" element = {<TechnologiesTableView/>}></Route>
@@ -21,6 +27,10 @@ function App() {
         <Route path = "/technologyForm" element = {<TechnologyForm/>}></Route>
         <Route path = "/wasteProducersForm" element = {<WasteProducersForm/>}></Route>
         <Route path = "/wasteProducersView" element = {<WasteProducersView/>}></Route>
+        <Route path="/statisticsView" element={<StatisticsView />} />
+        <Route path="/realizatorsView" element={<RealizatorsView />} />
+        <Route path="/okpdView" element={<OkpdView />} />
+        <Route path="/fkkoView" element={<FkkoView />} />
       </Routes>
     </Router>
     </>
