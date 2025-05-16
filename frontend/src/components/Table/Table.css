@@ -25,6 +25,7 @@
   font-weight: bold;
 }
 
+
 .data-table tr:nth-child(even) {
   background-color: #e6f4ea;
 }

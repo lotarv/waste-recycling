@@ -7,9 +7,10 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: false,
     user: null,
     role: null, // "user" или "producer"
+    producerData: null,
   });
 
-  // Проверяем localStorage при загрузке
+  // Проверка localStorage при загрузке
   useEffect(() => {
     const storedAuth = localStorage.getItem("auth");
     if (storedAuth) {
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     { login: "producer1", password: "pass2", role: "producer" },
   ];
 
-  // Функция авторизации
+  // Авторизация
   const login = (login, password) => {
     const user = testUsers.find(
       (u) => u.login === login && u.password === password
@@ -33,6 +34,12 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated: true,
         user: login,
         role: user.role,
+        producerData: user.role === "producer" ? {
+          location: "Новосибирская область",
+          name: "ООО «ЭкоПром»",
+          fkko: { code: "3 10 112 01 42 4", name: "Отходы бумаги и картона, загрязнённые" },
+          hazardClass: "IV",
+        } : null
       };
       setAuth(newAuth);
       localStorage.setItem("auth", JSON.stringify(newAuth));
@@ -41,14 +48,19 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
-  // Функция выхода
+  // Выход
   const logout = () => {
-    setAuth({ isAuthenticated: false, user: null, role: null });
+    setAuth({
+      isAuthenticated: false,
+      user: null,
+      role: null,
+      producerData: null,
+    });
     localStorage.removeItem("auth");
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

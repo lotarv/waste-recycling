@@ -1,43 +1,50 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext/AuthContext";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import "./ImplementersView.css";
 
-const mockImplementers = [
-  {
-    id: 1,
-    fkkoCode: "1 11 111 11 11 5",
-    wasteName: "Бумага и картон отходы",
-    technology: "Переработка бумаги",
-    organization: "ЭкоПереработка",
-    region: "Москва",
-    volume: "100 тонн/месяц",
-    contact: "info@ecopere.ru, +7 (495) 123-45-67",
-  },
-  {
-    id: 2,
-    fkkoCode: "4 81 201 01 52 4",
-    wasteName: "Пластиковые отходы",
-    technology: "Переработка пластика",
-    organization: "ПластРесайкл",
-    region: "Краснодарский край",
-    volume: "50 тонн/месяц",
-    contact: "contact@plastrecycle.ru, +7 (861) 987-65-43",
-  },
-  {
-    id: 3,
-    fkkoCode: "7 31 110 01 21 5",
-    wasteName: "Отработанные батареи",
-    technology: "Переработка батареек",
-    organization: "БатарейкаЭко",
-    region: "Санкт-Петербург",
-    volume: "10 тонн/месяц",
-    contact: "eco@battery.ru, +7 (812) 555-55-55",
-  },
-];
+// Массив реализаторов (можно вынести в отдельный файл)
+import mockImplementers from "../../data/mockImplementers";
+
+const ITEMS_PER_PAGE = 10;
 
 function ImplementersView() {
   const { auth } = useContext(AuthContext);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [filteredData, setFilteredData] = useState([]);
+
+  // Фильтрация по полям
+  useEffect(() => {
+    const lower = search.toLowerCase();
+    const result = mockImplementers.filter((item) =>
+      item.wasteName.toLowerCase().includes(lower) ||
+      item.technology.toLowerCase().includes(lower) ||
+      item.organization.toLowerCase().includes(lower) ||
+      item.region.toLowerCase().includes(lower) ||
+      item.fkkoCode.replace(/\s/g, "").includes(lower.replace(/\s/g, ""))
+    );
+    setFilteredData(result);
+    setPage(1); // сброс на первую страницу при новом поиске
+  }, [search]);
+
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const recommendedFilter = (impl) =>
+  impl.technology === "Переработка бумаги" &&
+  impl.region === "Новосибирская область";
+
+  const sortedData = filteredData
+    .map((item) => ({
+      ...item,
+      isRecommended: recommendedFilter(item),
+    }))
+    .sort((a, b) => Number(b.isRecommended) - Number(a.isRecommended));
+
+  const paginatedData = sortedData.slice( // именно отсюда!
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   if (!auth.isAuthenticated) {
     return (
@@ -57,10 +64,12 @@ function ImplementersView() {
   return (
     <div className="implementers-view">
       <h1>Реализаторы технологий переработки</h1>
-      <p>Найдите подходящих реализаторов для переработки ваших отходов по коду ФККО.</p>
+      <p>Найдите подходящих реализаторов для переработки ваших отходов по коду ФККО, региону или названию отходов.</p>
+
+      <SearchBar value={search} onChange={setSearch} placeholder="Поиск по ФККО, технологии, отходам, региону" />
 
       <div className="card">
-        <h2>Список реализаторов</h2>
+        <h2>Список организаций-реализаторов технологий переработки</h2>
         <div className="table-container">
           <table>
             <thead>
@@ -75,8 +84,8 @@ function ImplementersView() {
               </tr>
             </thead>
             <tbody>
-              {mockImplementers.map((impl) => (
-                <tr key={impl.id}>
+              {paginatedData.map((impl) => (
+                <tr key={impl.id} className={auth.role === "producer" && impl.isRecommended ? "recommended-row" : ""}>
                   <td>{impl.fkkoCode}</td>
                   <td>{impl.wasteName}</td>
                   <td>{impl.technology}</td>
@@ -89,6 +98,14 @@ function ImplementersView() {
             </tbody>
           </table>
         </div>
+
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button onClick={() => setPage((p) => Math.max(p - 1, 1))}>{"<"}</button>
+            <span>{page} / {totalPages}</span>
+            <button onClick={() => setPage((p) => (p < totalPages ? p + 1 : p))}>{">"}</button>
+          </div>
+        )}
       </div>
     </div>
   );

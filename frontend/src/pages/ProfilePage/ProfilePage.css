@@ -43,6 +43,10 @@ strong {
   margin-top: 20px;
 }
 
+.producer-info p {
+  text-align: left;
+}
+
 .producer-form {
   margin-top: 20px;
 }
