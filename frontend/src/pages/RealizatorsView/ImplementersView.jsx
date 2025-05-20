@@ -31,8 +31,10 @@ function ImplementersView() {
 
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const recommendedFilter = (impl) =>
-  impl.technology === "Переработка бумаги" &&
-  impl.region === "Новосибирская область";
+  // impl.technology === "Переработка пластика" &&
+  // impl.region === "Республика Татарстан";
+  impl.technology === "Переработка резины" &&
+  impl.region === "Краснодарский край";
 
   const sortedData = filteredData
     .map((item) => ({

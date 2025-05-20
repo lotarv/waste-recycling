@@ -5,13 +5,11 @@ import "./index.css"
 import TechnologiesTableView from './pages/TechnologiesView/TechnologiesView'
 import TechDetails from './pages/TechDetails/TechDetails';
 import HomePage from './pages/HomePage/HomePage';
-import DynamicHeader from './components/Header/DynamicHeader';
 import TechnologyForm from './pages/TechnologyForm/TechnologyForm';
 import WasteProducersForm from './pages/WasteProducersForm/WasteProducersForm';
 import WasteProducersView from './pages/WasteProducersView.jsx/WasteProducersView';
 import Header from './components/Header/Header';
 import StatisticsView from './pages/StatisticsView/StatisticsView';
-import RealizatorsView from './pages/RealizatorsView/ImplementersView';
 import FkkoView from './pages/FkkoView/FkkoView';
 import OkpdView from './pages/OkpdView/OkpdView';
 import ImplementersView from './pages/RealizatorsView/ImplementersView';

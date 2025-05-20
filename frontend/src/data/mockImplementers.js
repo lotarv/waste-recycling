@@ -324,7 +324,7 @@ const mockImplementers = [
     "fkkoCode": "4 61 132 01 41 4",
     "wasteName": "Отходы полиэтилена высокого давления",
     "technology": "Переработка пластика",
-    "organization": "РосУтилизация",
+    "organization": "УтильПром",
     "region": "Республика Татарстан",
     "volume": "10 тонн/месяц",
     "contact": "info33@company.ru, +7 (900) 549-22-98"
